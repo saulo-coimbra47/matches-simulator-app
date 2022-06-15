@@ -6,3 +6,6 @@ App Android nativo de simulação de partidas de futebol. Este repositório foi 
 
 2. Componentes, Layouts e UI/UX em Apps Android
     - [release/components-layouts-ui-ux-em-apps-android](https://github.com/saulo-coimbra47/matches-simulator-app/tree/release/components-layouts-ui-ux-em-apps-android)
+
+3. Construindo Apps Android
+    - [release/construindo-apps-android](https://github.com/saulo-coimbra47/matches-simulator-app/tree/release/construindo-apps-android)
