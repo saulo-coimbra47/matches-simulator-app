@@ -3,28 +3,27 @@ package me.dio.simulator.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import android.view.animation.Animation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import me.dio.simulator.R
-import me.dio.simulator.databinding.ActivityMainBinding
-import retrofit2.Retrofit
-import retrofit2.Call
-import retrofit2.converter.gson.GsonConverterFactory
 import me.dio.simulator.data.MatchesAPI
+import me.dio.simulator.databinding.ActivityMainBinding
 import me.dio.simulator.domain.Match
 import me.dio.simulator.ui.adapter.MatchesAdapter
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var matchesApi: MatchesAPI
     private lateinit var binding: ActivityMainBinding
-    private lateinit var matchesAdapter: MatchesAdapter
+    private var matchesAdapter: MatchesAdapter = MatchesAdapter(Collections.emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupMatchesList() {
         binding.rvMatches.setHasFixedSize(true)
         LinearLayoutManager(this).also { binding.rvMatches.layoutManager = it }
+        binding.rvMatches.adapter = this.matchesAdapter
         findMatchesFromApi()
     }
 
@@ -64,8 +64,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupFloatingActionButton() {
         binding.fabSimulate.setOnClickListener { view -> run {
             view.animate().rotationBy(360F).setDuration(500).setListener(object: AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator): Unit {
-                    var random = Random
+                override fun onAnimationEnd(animation: Animator) {
+                    val random = Random
                     for (i in 0 until matchesAdapter.itemCount){
                         val match: Match = matchesAdapter.getMatches()[i]
                         match.homeTeam.score = random.nextInt(match.homeTeam.stars + 1)
